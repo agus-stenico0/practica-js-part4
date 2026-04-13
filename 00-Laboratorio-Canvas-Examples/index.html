@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cheatsheet: POO y Canvas - Appwise</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>🚀 Machete Appwise: POO &amp; Canvas API</h1>
+
+      <!-- ── SECCIÓN 1: POO ───────────────────────────────────── -->
+      <h2>1. Programación Orientada a Objetos (POO)</h2>
+      <div class="grid">
+        <div class="card">
+          <h3>El Molde (Clase y Constructor)</h3>
+          <p>La fábrica para crear múltiples objetos con <code>new</code>.</p>
+          <pre><code><span class="keyword">class</span> Entidad {
+  <span class="keyword">constructor</span>(x, y) {
+    <span class="keyword">this</span>.x = x; <span class="comment">// 'this' es ESTA instancia</span>
+    <span class="keyword">this</span>.y = y;
+  }
+  <span class="method">moverse</span>() {
+    <span class="keyword">this</span>.x += 5;
+  }
+}
+<span class="keyword">const</span> jugador = <span class="keyword">new</span> Entidad(10, 20);</code></pre>
+        </div>
+
+        <div class="card">
+          <h3>Privacidad (Getters y Setters)</h3>
+          <p>Proteger variables con <code>#</code> y controlarlas.</p>
+          <pre><code><span class="keyword">class</span> Banco {
+  <span class="keyword">#saldo</span> = 1000; <span class="comment">// Variable privada</span>
+
+  <span class="keyword">get</span> <span class="method">verSaldo</span>() {
+    <span class="keyword">return</span> <span class="keyword">this</span>.#saldo;
+  }
+  <span class="keyword">set</span> <span class="method">modificarSaldo</span>(monto) {
+    <span class="keyword">if</span> (monto > 0) <span class="keyword">this</span>.#saldo = monto;
+  }
+}
+<span class="comment">// Se usan SIN paréntesis:</span>
+banco.modificarSaldo = 5000;</code></pre>
+        </div>
+
+        <div class="card">
+          <h3>Herencia (extends &amp; super)</h3>
+          <p>Crear una clase hija basada en una clase padre.</p>
+          <pre><code><span class="keyword">class</span> Enemigo <span class="keyword">extends</span> Entidad {
+  <span class="keyword">constructor</span>(x, y, dano) {
+    <span class="keyword">super</span>(x, y); <span class="comment">// Llama al constructor padre</span>
+    <span class="keyword">this</span>.dano = dano;
+  }
+  <span class="method">atacar</span>() {
+    console.log(<span class="string">"¡Daño: "</span> + <span class="keyword">this</span>.dano + <span class="string">"!"</span>);
+  }
+}</code></pre>
+        </div>
+      </div>
+
+      <!-- ── SECCIÓN 2: CANVAS ────────────────────────────────── -->
+      <h2 class="canvas-title">2. Canvas 2D API &amp; Motores de Juego</h2>
+      <div class="grid">
+        <div class="card">
+          <h3>1. Configuración Inicial</h3>
+          <p>Atrapar el lienzo y pedir el contexto.</p>
+          <pre><code><span class="comment">/** @type {HTMLCanvasElement} */</span>
+<span class="keyword">const</span> canvas = document.querySelector(<span class="string">"#lienzo"</span>);
+<span class="keyword">const</span> ctx = canvas.getContext(<span class="string">"2d"</span>);</code></pre>
+        </div>
+
+        <div class="card">
+          <h3>2. El Game Loop (Vital)</h3>
+          <p>La ilusión de movimiento: borrar, actualizar y redibujar.</p>
+          <pre><code><span class="keyword">function</span> <span class="method">loop</span>() {
+  <span class="comment">// 1. Borrar todo</span>
+  ctx.<span class="method">clearRect</span>(0, 0, canvas.width, canvas.height);
+
+  <span class="comment">// 2. Actualizar variables</span>
+  <span class="comment">// 3. Dibujar</span>
+
+  <span class="comment">// 4. Repetir (sincronizado con el monitor)</span>
+  requestAnimationFrame(loop);
+}
+<span class="method">loop</span>();</code></pre>
+        </div>
+
+        <div class="card">
+          <h3>3. Dibujar Rectángulos</h3>
+          <p>Personajes retro y plataformas.</p>
+          <pre><code><span class="comment">// Relleno</span>
+ctx.fillStyle = <span class="string">"blue"</span>;
+ctx.<span class="method">fillRect</span>(x, y, ancho, alto);
+
+<span class="comment">// Contorno</span>
+ctx.strokeStyle = <span class="string">"red"</span>;
+ctx.lineWidth = 3;
+ctx.<span class="method">strokeRect</span>(x, y, ancho, alto);</code></pre>
+        </div>
+
+        <div class="card">
+          <h3>4. Dibujar Círculos</h3>
+          <p>Pelotas y ruedas.</p>
+          <pre><code>ctx.<span class="method">beginPath</span>();
+<span class="comment">// arc(x, y, radio, anguloInicio, anguloFin)</span>
+ctx.<span class="method">arc</span>(x, y, 10, 0, Math.PI * 2);
+ctx.fillStyle = <span class="string">"white"</span>;
+ctx.<span class="method">fill</span>();
+ctx.<span class="method">closePath</span>();</code></pre>
+        </div>
+
+        <div class="card">
+          <h3>5. Dibujar Textos</h3>
+          <p>Para marcadores y Game Over.</p>
+          <pre><code>ctx.fillStyle = <span class="string">"#00ffcc"</span>;
+ctx.font = <span class="string">"30px Courier New"</span>;
+
+<span class="comment">// fillText("Texto", X, Y)</span>
+ctx.<span class="method">fillText</span>(<span class="string">"Score: 10"</span>, 50, 50);</code></pre>
+        </div>
+
+        <div class="card">
+          <h3>6. Fórmula de Colisión (AABB)</h3>
+          <p>Rectángulo A colisiona con Rectángulo B.</p>
+          <pre><code><span class="keyword">if</span> (
+  rectA.x &lt; rectB.x + rectB.ancho &amp;&amp;
+  rectA.x + rectA.ancho &gt; rectB.x &amp;&amp;
+  rectA.y &lt; rectB.y + rectB.alto  &amp;&amp;
+  rectA.y + rectA.alto  &gt; rectB.y
+) {
+  console.log(<span class="string">"¡BAM! Chocaron"</span>);
+}</code></pre>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,12 @@
+{
+  "name": "04-tarea-katas-poo",
+  "version": "1.0.0",
+  "description": "Katas de POO con tests Jest",
+  "scripts": {
+    "test": "jest",
+    "test:watch": "jest --watch"
+  },
+  "devDependencies": {
+    "jest": "^29.0.0"
+  }
+}

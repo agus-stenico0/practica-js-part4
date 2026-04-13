@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Explicación Visual de Colisiones - Appwise</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <h1>🧠 Desarmando la Fórmula de Colisión</h1>
+    <p style="color: var(--text); max-width: 600px; text-align: center">
+      Mové el cuadrado
+      <span style="color: var(--red); font-weight: bold">ROJO</span> con el
+      mouse. La colisión ocurre <strong>solo</strong> si las 4 condiciones se
+      cumplen (están en
+      <span style="color: var(--green); font-weight: bold">VERDE</span>) al
+      mismo tiempo.
+    </p>
+
+    <div class="grid-layout">
+      <canvas id="lienzoExplicacion" width="600" height="400"></canvas>
+
+      <div class="panel-control">
+        <h2>Ecuación de No-Separación</h2>
+        <p style="margin-bottom: 20px; color: #8b949e">¿Están colisionando?</p>
+
+        <div id="condicion1" class="condicion">
+          <span class="status">?</span><code>rectA.x < rectB.x + rectB.w</code>
+        </div>
+        <div id="condicion2" class="condicion">
+          <span class="status">?</span><code>rectA.x + rectA.w > rectB.x</code>
+        </div>
+        <div id="condicion3" class="condicion">
+          <span class="status">?</span><code>rectA.y < rectB.y + rectB.h</code>
+        </div>
+        <div id="condicion4" class="condicion">
+          <span class="status">?</span><code>rectA.y + rectA.h > rectB.y</code>
+        </div>
+
+        <div id="resultado-bam">NO CHOCAN</div>
+      </div>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
